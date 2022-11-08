@@ -1,18 +1,23 @@
 const Movies = require('../models/movie');
+const IncorrectData = require('../errors/IncorrectData');
+const {
+  INCORRECT_DATA_MESSAGE,
+  NOT_FOUND_MOVIE_ID_MESSAGE,
+  NOT_RIGHTS_MESSAGE,
+} = require('../utils/constants');
+const NotRightError = require('../errors/NotRightError');
+const NotFoundError = require('../errors/NotFoundError');
 
-module.exports.getMovies = (req, res) => {
+module.exports.getMovies = (req, res, next) => {
   const userId = req.user._id;
-  console.log(userId);
   Movies.find({ owner: userId })
     .then((movies) => {
       res.send(movies);
     })
-    .catch((err) => {
-      res.send(err);
-    });
+    .catch(next);
 };
 
-module.exports.createMovie = (req, res) => {
+module.exports.createMovie = (req, res, next) => {
   const {
     country,
     director,
@@ -41,11 +46,17 @@ module.exports.createMovie = (req, res) => {
     owner: req.user._id,
   })
     .then((movie) => res.send(movie))
-    .catch((err) => res.send(err));
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new IncorrectData(INCORRECT_DATA_MESSAGE));
+      } else {
+        next(err);
+      }
+    });
 };
 
-module.exports.deleteMovie = (req, res) => {
-  Movies.findById(req.params.movieId)
+module.exports.deleteMovie = (req, res, next) => {
+  Movies.findById(req.params.movieId).orFail(new NotFoundError(NOT_FOUND_MOVIE_ID_MESSAGE))
     .then((movie) => {
       const user = String(req.user._id);
       const movieOwner = String(movie.owner);
@@ -53,10 +64,14 @@ module.exports.deleteMovie = (req, res) => {
         Movies.findByIdAndRemove(req.params.movieId)
           .then((deletedMovie) => res.send(deletedMovie));
       } else {
-        throw new Error();
+        next(new NotRightError(NOT_RIGHTS_MESSAGE));
       }
     })
     .catch((err) => {
-      res.send(err);
+      if (err.name === 'CastError') {
+        next(new IncorrectData(INCORRECT_DATA_MESSAGE));
+      } else {
+        next(err);
+      }
     });
 };
