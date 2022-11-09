@@ -79,6 +79,8 @@ module.exports.patchUser = (req, res, next) => {
         next(new IncorrectData(INCORRECT_DATA_MESSAGE));
       } else if (err.name === 'CastError') {
         next(new IncorrectData(NOT_FOUND_USER_ID_MESSAGE));
+      } else if (err.code === 11000) {
+        next(new ExistEmailError(EXIST_EMAIL_MESSAGE));
       } else {
         next(err);
       }
