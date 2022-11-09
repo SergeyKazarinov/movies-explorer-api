@@ -26,7 +26,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => validator.isURL(url),
+      validator: (url) => validator.isURL(url, { require_protocol: true }),
       message: 'Ссылка не является валидной',
     },
   },
@@ -34,7 +34,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => validator.isURL(url),
+      validator: (url) => validator.isURL(url, { require_protocol: true }),
       message: 'Ссылка не является валидной',
     },
   },
@@ -42,7 +42,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => validator.isURL(url),
+      validator: (url) => validator.isURL(url, { require_protocol: true }),
       message: 'Ссылка не является валидной',
     },
   },
