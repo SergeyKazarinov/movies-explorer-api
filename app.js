@@ -7,7 +7,7 @@ const express = require('express');
 const router = require('./routes');
 const err = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const limiter = require('./middlewares/rateLimit/limiter');
+const limiter = require('./middlewares/limiter');
 
 const { PORT = 3000 } = process.env;
 
