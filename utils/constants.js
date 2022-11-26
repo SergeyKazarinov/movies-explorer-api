@@ -1,12 +1,12 @@
 const SERVER_ERROR_CODE = 500;
-const SERVER_ERROR_MESSAGE = 'Неизвестная ошибка сервера';
-const NOT_FOUND_ROUTE_MESSAGE = 'Запрашиваемый адрес запроса не найден';
+const SERVER_ERROR_MESSAGE = 'На сервере произошла ошибка.';
+const NOT_FOUND_ROUTE_MESSAGE = 'Страница по указанному маршруту не найдена.';
 const NOT_FOUND_USER_ID_MESSAGE = 'Пользователь с указанным id не найден.';
 const NOT_FOUND_MOVIE_ID_MESSAGE = 'Фильм с указанным id не найден.';
 const NOT_RIGHTS_MESSAGE = 'У вас нет прав на удаление';
 const INCORRECT_DATA_MESSAGE = 'Переданы не корректные данные';
-const LOGIN_ERROR_MESSAGE = 'Неверное имя пользователя или пароль';
-const NOT_REGISTERED_MESSAGE = 'Необходима авторизация.';
+const LOGIN_ERROR_MESSAGE = 'Вы ввели неправильный логин или пароль.';
+const NOT_REGISTERED_MESSAGE = 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.';
 const EXIST_EMAIL_MESSAGE = 'Пользователь с таким Email уже существует.';
 const INVALID_LINK = 'Ссылка не является валидной';
 const ENTER_EMAIL = 'Введите пожалуйста Email';

@@ -11,6 +11,7 @@ const NotFoundError = require('../errors/NotFoundError');
 module.exports.getMovies = (req, res, next) => {
   const userId = req.user._id;
   Movies.find({ owner: userId })
+    .populate('owner')
     .then((movies) => {
       res.send(movies);
     })
