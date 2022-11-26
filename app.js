@@ -4,7 +4,7 @@ const express = require('express');
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-const cors = require('cors');
+const middlewarCors = require('./middlewares/cors');
 const router = require('./routes');
 const err = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -14,7 +14,7 @@ const dataBaseUrl = require('./utils/config');
 const { PORT = 3000, NODE_ENV, DATA_BASE_URL } = process.env;
 
 const app = express();
-app.use(cors());
+app.use(middlewarCors);
 mongoose.connect(NODE_ENV === 'production' ? DATA_BASE_URL : dataBaseUrl);
 
 app.use(helmet());
